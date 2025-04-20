@@ -1,0 +1,57 @@
+{
+  "name": "onnx-model-comparator",
+  "displayName": "ONNX Model Comparator",
+  "description": "Compare two ONNX models and visualize their differences",
+  "version": "1.0.27",
+  "publisher": "satabios",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "onnx-model-comparator.compareModels",
+        "title": "Compare ONNX Models"
+      }
+    ]
+  },
+  "scripts": {
+    "copy-proto": "mkdir -p dist && cp onnx.proto dist/",
+    "install-deps": "npm install diff@5.1.0 onnxruntime-node@1.17.0 protobufjs@7.5.0",
+    "vscode:prepublish": "npm run install-deps && npm run copy-proto && esbuild ./extension.js --bundle --platform=node --outfile=dist/extension.js --external:vscode --external:onnxruntime-node --external:protobufjs --external:diff --minify",
+    "build": "npm run copy-proto && esbuild ./extension.js --bundle --platform=node --outfile=dist/extension.js --external:vscode --external:onnxruntime-node --external:protobufjs",
+    "build:production": "npm run vscode:prepublish",
+    "watch": "npm run build -- --watch",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "diff": "^5.1.0",
+    "onnxruntime-node": "^1.17.0",
+    "protobufjs": "^7.5.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.x.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/satabios/onnx-comparator.git"
+  },
+  "keywords": [
+    "onnx",
+    "machine learning",
+    "model comparison",
+    "deep learning"
+  ],
+  "author": "satabios",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/satabios/onnx-comparator/issues"
+  },
+  "homepage": "https://github.com/satabios/onnx-comparator#readme"
+}
